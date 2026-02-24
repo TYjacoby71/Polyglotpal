@@ -1,0 +1,106 @@
+.page { max-width: 640px; }
+
+.hero {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.heroEmoji  { font-size: 48px; }
+.heroTitle  { font-family: var(--font-display); font-size: 28px; font-weight: 800; color: var(--ink); margin: 8px 0; }
+.heroSummary { font-size: 15px; color: var(--ink-3); line-height: 1.6; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+
+.cardFull { grid-column: 1 / -1; }
+
+.cardTitle {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+
+.list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.listItem {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.5;
+  padding-left: 14px;
+  position: relative;
+}
+
+.listItem::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.vocabGrid { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.vocabChip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--blue-light);
+  border-radius: 99px;
+  padding: 6px 14px;
+}
+
+.vocabWord  { font-weight: 700; color: var(--blue); font-size: 14px; }
+.vocabGloss { font-size: 13px; color: var(--ink-3); }
+
+.actions { display: flex; gap: 12px; }
+
+.primaryBtn {
+  flex: 1;
+  padding: 16px;
+  background: var(--blue);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-blue);
+  transition: all 0.15s;
+}
+.primaryBtn:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+.secondaryBtn {
+  flex: 1;
+  padding: 16px;
+  background: white;
+  color: var(--ink-2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.secondaryBtn:hover { border-color: var(--blue); color: var(--blue); }
+
+@media (max-width: 500px) {
+  .grid { grid-template-columns: 1fr; }
+  .actions { flex-direction: column; }
+}

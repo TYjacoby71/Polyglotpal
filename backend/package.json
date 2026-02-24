@@ -1,0 +1,31 @@
+{
+  "name": "polyglotpal-backend",
+  "version": "0.1.0",
+  "description": "PolyglotPal API server",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "db:migrate": "node src/db/migrate.js",
+    "db:seed": "node src/db/seed.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.24.0",
+    "@fastify/cors": "^9.0.0",
+    "@fastify/jwt": "^8.0.0",
+    "@fastify/multipart": "^8.3.0",
+    "@fastify/rate-limit": "^9.0.0",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.26.2",
+    "openai": "^4.47.1",
+    "pg": "^8.11.5",
+    "redis": "^4.6.13",
+    "uuid": "^9.0.1",
+    "zod": "^3.23.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

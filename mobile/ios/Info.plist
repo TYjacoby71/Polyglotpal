@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+
+  <!-- App display name -->
+  <key>CFBundleDisplayName</key>
+  <string>PolyglotPal</string>
+  <key>CFBundleIdentifier</key>
+  <string>com.polyglotpal</string>
+  <key>CFBundleVersion</key>
+  <string>1</string>
+  <key>CFBundleShortVersionString</key>
+  <string>0.1.0</string>
+
+  <!-- ── Required permissions ───────────────────────────────────────── -->
+
+  <!-- Microphone — required for voice input -->
+  <key>NSMicrophoneUsageDescription</key>
+  <string>PolyglotPal uses your microphone to hear your Spanish practice. Audio is only recorded when you hold the Talk button.</string>
+
+  <!-- Speech recognition (if using on-device ASR later) -->
+  <key>NSSpeechRecognitionUsageDescription</key>
+  <string>PolyglotPal uses speech recognition to transcribe your practice sessions.</string>
+
+  <!-- Calendar (optional — used to avoid notifications during meetings) -->
+  <key>NSCalendarsUsageDescription</key>
+  <string>PolyglotPal can check your calendar to avoid sending practice reminders during busy times. This is optional.</string>
+
+  <!-- ── Background modes ───────────────────────────────────────────── -->
+  <key>UIBackgroundModes</key>
+  <array>
+    <string>audio</string>
+    <string>fetch</string>
+    <string>remote-notification</string>
+  </array>
+
+  <!-- ── Orientation ────────────────────────────────────────────────── -->
+  <key>UISupportedInterfaceOrientations</key>
+  <array>
+    <string>UIInterfaceOrientationPortrait</string>
+  </array>
+  <key>UISupportedInterfaceOrientations~ipad</key>
+  <array>
+    <string>UIInterfaceOrientationPortrait</string>
+    <string>UIInterfaceOrientationPortraitUpsideDown</string>
+    <string>UIInterfaceOrientationLandscapeLeft</string>
+    <string>UIInterfaceOrientationLandscapeRight</string>
+  </array>
+
+  <!-- ── React Native ───────────────────────────────────────────────── -->
+  <key>NSAppTransportSecurity</key>
+  <dict>
+    <!-- Allow localhost in dev builds -->
+    <key>NSAllowsLocalNetworking</key>
+    <true/>
+    <!-- Allow cleartext to localhost -->
+    <key>NSExceptionDomains</key>
+    <dict>
+      <key>localhost</key>
+      <dict>
+        <key>NSExceptionAllowsInsecureHTTPLoads</key>
+        <true/>
+      </dict>
+    </dict>
+  </dict>
+
+  <key>UILaunchStoryboardName</key>
+  <string>LaunchScreen</string>
+  <key>UIViewControllerBasedStatusBarAppearance</key>
+  <false/>
+
+</dict>
+</plist>
