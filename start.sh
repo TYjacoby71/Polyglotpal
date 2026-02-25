@@ -71,35 +71,33 @@ done
 # ── Install backend deps ──────────────────────────────────────────────
 echo ""
 echo -e "${CYAN}  Installing backend dependencies...${NC}"
-cd backend && npm install --silent && cd ..
+(cd backend && npm install --silent)
 echo -e "${GREEN}  ✓  Backend deps installed${NC}"
 
 # ── Run migrations ────────────────────────────────────────────────────
 echo ""
 echo -e "${CYAN}  Running database migrations...${NC}"
-cd backend && node src/db/migrate.js && cd ..
+(cd backend && node src/db/migrate.js)
 echo -e "${GREEN}  ✓  Database ready${NC}"
 
 # ── Install web deps ──────────────────────────────────────────────────
 echo ""
 echo -e "${CYAN}  Installing web app dependencies...${NC}"
-cd web && npm install --silent && cd ..
+(cd web && npm install --silent)
 echo -e "${GREEN}  ✓  Web deps installed${NC}"
 
 # ── Start backend ─────────────────────────────────────────────────────
 echo ""
 echo -e "${CYAN}  Starting backend API on http://localhost:3000 ...${NC}"
-cd backend && npm run dev &
+(cd backend && npm run dev) &
 BACKEND_PID=$!
-cd ..
 
 sleep 2
 
 # ── Start web ─────────────────────────────────────────────────────────
 echo -e "${CYAN}  Starting web app on http://localhost:5173 ...${NC}"
-cd web && npm run dev &
+(cd web && npm run dev) &
 WEB_PID=$!
-cd ..
 
 sleep 1
 
