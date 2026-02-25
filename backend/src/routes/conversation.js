@@ -73,14 +73,29 @@ export async function conversationRoutes(app) {
       { role: 'user', content: user_text },
     ];
 
-    const llmResponse = await anthropic.messages.create({
-      model: modelChoice.model,
-      max_tokens: 600,
-      system: systemPrompt,
-      messages,
-    });
+    let llmResponse;
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        llmResponse = await Promise.race([
+          anthropic.messages.create({
+            model: modelChoice.model,
+            max_tokens: 400,
+            system: systemPrompt,
+            messages,
+          }),
+          new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('LLM timeout')), 15000)
+          ),
+        ]);
+        break;
+      } catch (err) {
+        if (attempt === 3) throw err;
+        await new Promise(r => setTimeout(r, 1000 * attempt));
+      }
+    }
 
     const botReply = llmResponse.content[0].text;
+    console.log('DEBUG: got bot reply, length', botReply.length);
 
     // ── Detect errors in user_text ────────────────────────────────────
     const errors = await detectErrors({
@@ -97,6 +112,7 @@ export async function conversationRoutes(app) {
       await recordError({ ...err, session_id, user_id: userId });
     }
 
+    console.log('DEBUG: errors detected', errors.length);
     // ── Extract new vocab from bot reply ──────────────────────────────
     const newVocab = await extractAndSaveVocab({
       botReply,
@@ -105,6 +121,7 @@ export async function conversationRoutes(app) {
       sessionId: session_id,
     });
 
+    console.log('DEBUG: vocab extracted', newVocab.length);
     // ── Update skill model ────────────────────────────────────────────
     await updateSkillModelFromTurn({
       userId,
@@ -114,6 +131,7 @@ export async function conversationRoutes(app) {
       skill,
     });
 
+    console.log('DEBUG: skill model updated');
     // ── Increment turn count ──────────────────────────────────────────
     await query(
       'UPDATE sessions SET turn_count = turn_count + 1 WHERE id = $1',
