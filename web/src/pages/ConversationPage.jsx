@@ -48,7 +48,8 @@ export function ConversationPage() {
   const speak = (text) => {
     if (!window.speechSynthesis) return;
     window.speechSynthesis.cancel();
-    const utt = new SpeechSynthesisUtterance(text);
+    const clean = text.replace(/[*_~`#]/g, '');
+    const utt = new SpeechSynthesisUtterance(clean);
     // Try to find a Spanish voice
     const voices = window.speechSynthesis.getVoices();
     const esVoice = voices.find(v => v.lang.startsWith('es'));
@@ -72,7 +73,7 @@ export function ConversationPage() {
       const result = await conversationAPI.sendTurn({
         sessionId,
         userText: trimmed,
-        turnHistory: [...turns, userTurn].slice(-10).map(t => ({ role: t.role, content: t.content })),
+        turnHistory: [...turns].slice(-10).map(t => ({ role: t.role, content: t.content })),
       });
 
       // Strip structured tags from display
@@ -122,11 +123,13 @@ export function ConversationPage() {
 
   const endSession = async () => {
     setEnding(true);
+    let receipt = null;
     try {
       await sessionAPI.end(sessionId, { target_language_ratio_avg: tlRatio });
-      const { receipt } = await conversationAPI.getReceipt(sessionId);
-      navigate(`/receipt/${sessionId}`, { state: { receipt } });
-    } catch { navigate('/'); }
+      const result = await conversationAPI.getReceipt(sessionId);
+      receipt = result.receipt;
+    } catch { /* fall through — navigate to receipt with fallback */ }
+    navigate(`/receipt/${sessionId}`, { state: { receipt: receipt ?? {} } });
   };
 
   const replayLast = () => {
@@ -140,6 +143,7 @@ export function ConversationPage() {
       {/* Header */}
       <header className={styles.header}>
         <div className={styles.headerLeft}>
+          <button className={styles.homeBtn} onClick={() => navigate('/')} title="Back to home">←</button>
           <span className={styles.headerTitle}>Spanish Chat</span>
           <div className={styles.tlPill}>
             <div className={styles.tlFill} style={{ width: `${Math.round(tlRatio * 100)}%` }} />

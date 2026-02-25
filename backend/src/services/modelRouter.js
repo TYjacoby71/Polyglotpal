@@ -99,7 +99,7 @@ function longestCommonSubstring(a, b) {
   for (let i = 0; i < a.length; i++) {
     for (let j = 0; j < b.length; j++) {
       let len = 0;
-      while (a[i + len] === b[j + len]) len++;
+      while (i + len < a.length && j + len < b.length && a[i + len] === b[j + len]) len++;
       if (len > max) max = len;
     }
   }
